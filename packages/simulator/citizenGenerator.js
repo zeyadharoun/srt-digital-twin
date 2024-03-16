@@ -10,12 +10,12 @@ const {
 } = require('rxjs/operators')
 const perlin = require('perlin-noise')
 
-const pelias = require('./lib/pelias')
-const { addMeters } = require('./lib/distance')
-const { randomNames } = require('./lib/personNames')
+const pelias = require('./lib/deps/pelias')
+const { addMeters } = require('./lib/utils/geo/distance')
+const { randomNames } = require('./lib/utils/personNames')
 const { randomize } = require('./simulator/address')
-const kommuner = require('./streams/kommuner').read()
-const { safeId } = require('./lib/id')
+const kommuner = require('./streams/index').read()
+const { safeId } = require('./lib/utils/id')
 const { debug, info, write } = require('./lib/log')
 
 const NUMBER_OF_CITIZENS = 3000

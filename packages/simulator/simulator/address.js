@@ -1,11 +1,11 @@
-const osrm = require('../lib/osrm')
+const osrm = require('../lib/deps/osrm')
 const assert = require('assert')
-const Position = require('../lib/models/position')
-const { addMeters } = require('../lib/distance')
+const Position = require('../lib/class/geo/position')
+const { addMeters } = require('../lib/utils/geo/distance')
 const fetch = require('node-fetch')
 const { error } = require('../lib/log')
 const streamsUrl =
-  process.env.STREAMS_URL || 'https://streams.predictivemovement.se/addresses'
+  process.env.STREAMS_URL || 'https://sample-address:4100/addresses'
 
 const getAddressesInBoundingBox = (
   topLeft,

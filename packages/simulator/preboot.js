@@ -1,2 +1,2 @@
-const elastic = require('./lib/elastic')
+const elastic = require('./lib/deps/elastic')
 elastic.createIndices()
