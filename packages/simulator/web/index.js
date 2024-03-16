@@ -11,13 +11,15 @@ const ok = function (req, res) {
 
 const server = require('http').createServer(ok)
 
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    credentials: true,
-    methods: ['GET', 'POST'],
-  },
-})
+const io = require('socket.io')(server, 
+  {
+    cors: {
+      origin: 'http://localhost', // 'http://localhost:3000'
+      credentials: true,
+      methods: ['GET', 'POST'],
+    },
+  }
+)
 
 server.listen(port)
 routes.register(io)
