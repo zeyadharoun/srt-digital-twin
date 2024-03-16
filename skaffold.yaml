@@ -14,19 +14,19 @@ build:
         buildArgs:
           VITE_MAPBOX_ACCESS_TOKEN: "{{.VITE_MAPBOX_ACCESS_TOKEN}}"
           VITE_SIMULATOR_URL: /
-manifests:
-  kustomize:
-    paths:
-      - k8s/base
-deploy:
-  statusCheckDeadlineSeconds: 600
-profiles:
-  - name: prod
-    activation:
-      - env: GITHUB_REF_TYPE=tag
-    manifests:
-      kustomize:
-        paths:
-          - k8s/overlays/helsingborg
-          - k8s/overlays/rorla
-          - k8s/overlays/digital-twin
+# manifests:
+#   kustomize:
+#     paths:
+#       - k8s/base
+# deploy:
+#   statusCheckDeadlineSeconds: 600
+#profiles:
+#  - name: prod
+#    activation:
+#      - env: GITHUB_REF_TYPE=tag
+#    manifests:
+#      kustomize:
+#        paths:
+#          - k8s/overlays/helsingborg
+#          - k8s/overlays/rorla
+#          - k8s/overlays/digital-twin

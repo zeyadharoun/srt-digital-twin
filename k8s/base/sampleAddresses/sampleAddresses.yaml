@@ -52,10 +52,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - streams.predictivemovement.se
+        - streams.predictivemovement.com
       secretName: sampleaddresses-prod-tls
   rules:
-    - host: streams.predictivemovement.se
+    - host: streams.predictivemovement.com
       http:
         paths:
           - path: /addresses/(.*)
