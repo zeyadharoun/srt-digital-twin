@@ -7,12 +7,12 @@ const {
   pairwise,
 } = require('rxjs/operators')
 
-const { virtualTime } = require('./lib/virtualTime')
-const { safeId } = require('./lib/id')
+const { virtualTime } = require('./lib/utils/virtualTime')
+const { safeId } = require('./lib/utils/id')
 const { read } = require('./config')
-const statistics = require('./lib/statistics')
+const statistics = require('./lib/utils/statistics')
 const { info, error, logStream } = require('./lib/log')
-const { haversine, getNrOfPointsBetween } = require('./lib/distance')
+const { haversine, getNrOfPointsBetween } = require('./lib/utils/geo/distance')
 
 const engine = {
   subscriptions: [],
@@ -27,7 +27,7 @@ const engine = {
       }),
     })
 
-    const regions = require('./streams/regions')(savedParams)
+    const regions = require('./streams/geo')(savedParams)
 
     const parameters = {
       id,

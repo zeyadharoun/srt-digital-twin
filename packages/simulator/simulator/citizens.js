@@ -1,6 +1,6 @@
 const { take, map, filter, mergeAll } = require('rxjs/operators')
-const { randomNames } = require('../lib/personNames')
-const Citizen = require('../lib/models/citizen')
+const { randomNames } = require('../lib/utils/personNames')
+const Citizen = require('../lib/class/citizen')
 const { from, zip } = require('rxjs')
 const { getAddressesInArea } = require('./address')
 

@@ -1,9 +1,9 @@
 const { from, of } = require('rxjs')
 const { map, filter, first, mergeMap, toArray } = require('rxjs/operators')
-const pelias = require('../lib/pelias')
-const { haversine, addMeters } = require('../lib/distance')
+const pelias = require('../lib/deps/pelias')
+const { haversine, addMeters } = require('../lib/utils/geo/distance')
 const perlin = require('perlin-noise')
-const Booking = require('../lib/models/booking')
+const Booking = require('../lib/class/booking')
 
 const xy = (i, size = 100) => ({ x: i % size, y: Math.floor(i / size) })
 

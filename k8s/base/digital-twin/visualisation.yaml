@@ -1,3 +1,4 @@
+--- 
 apiVersion: v1
 kind: Service
 metadata:
@@ -42,14 +43,12 @@ metadata:
 spec:
   tls:
     - hosts:
-        - tvilling-stage.predictivemovement.se
-        # - helsingborg.predictivemovement.se # Legacy.
-        - helsingborg-stage.predictivemovement.se # Legacy.
-        # - rorla.predictivemovement.se # Legacy.
-        - rorla-stage.predictivemovement.se # Legacy.
-      secretName: helsingborg-stage-tls
+        - tvilling-stage.predictivemovement.com
+#        - helsingborg-stage.predictivemovement.com # Legacy.
+#        - rorla-stage.predictivemovement.com # Legacy.
+      secretName: tvilling-stage-tls
   rules:
-    - host: tvilling-stage.predictivemovement.se
+    - host: tvilling-stage.predictivemovement.com
       http:
         paths:
           - path: /
@@ -59,23 +58,23 @@ spec:
                 name: visualisation
                 port:
                   number: 80
-    - host: helsingborg-stage.predictivemovement.se
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: visualisation
-                port:
-                  number: 80
-    - host: rorla-stage.predictivemovement.se
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: visualisation
-                port:
-                  number: 80
+#    - host: helsingborg-stage.predictivemovement.com
+#      http:
+#        paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: visualisation
+#                port:
+#                  number: 80
+#    - host: rorla-stage.predictivemovement.com
+#      http:
+#        paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: visualisation
+#                port:
+#                  number: 80

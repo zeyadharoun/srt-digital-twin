@@ -1,8 +1,8 @@
 const { from, shareReplay, filter } = require('rxjs')
 const { map } = require('rxjs/operators')
-const { readCsv } = require('../adapters/csv')
+const { readCsv } = require('../lib/utils/adapters/csv')
 const coords = require('swe-coords')
-const { convertPosition } = require('../lib/distance')
+const { convertPosition } = require('../lib/utils/geo/distance')
 
 // read the SWEREF99 x,y combined string for a square km and return a WGS84 lat lon object
 // TODO: understand if the coordinate is the center of the square or the top left corner (if so, maybe add an offset to the position to get the center)
@@ -11,7 +11,7 @@ function parseRuta(ruta) {
 }
 
 function read() {
-  return from(readCsv(process.cwd() + '/data/5arsklasser_1km.csv')).pipe(
+  return from(readCsv(process.cwd() + '/data/population/5arsklasser_1km.csv')).pipe(
     map(({ id, rutstorl: area, ruta, beftotalt: population, ...ages }) => ({
       id,
       area,

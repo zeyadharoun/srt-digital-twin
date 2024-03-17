@@ -31,7 +31,7 @@ const darkTheme = createTheme({
 
 ReactDOM.render(
   <SocketIOProvider
-    url={import.meta.env.VITE_SIMULATOR_URL || 'http://localhost:4000'}
+    url={'http://localhost:4000'} // import.meta.env.VITE_SIMULATOR_URL ||
     opts={{ withCredentials: true }}
   >
     <ThemeProvider theme={darkTheme}>
