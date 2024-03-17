@@ -16,6 +16,10 @@
 
 Predictive Movement aims to create a digital platform that will act as a collaborative hub for the transportation of people and goods with the help of Artificial Intelligence. An important driving force behind the project is to combat climate change and to reduce emissions caused by road transports.
 
+<p align="center">
+<img width="491" alt="f9ee1056-ce9f-422f-904b-eddb1d732d0b" src="https://github.com/fernand0labra/srt-digital-twin/assets/70638694/01f98d8b-d57e-47d9-a481-7747f46f3bf0">
+</p>
+
 More information regarding Predictive Movement can be found in the following videos:
 
 // Insert Explanatory Videos
@@ -31,6 +35,8 @@ The project has the following objectives:
 3. Lower the cost for experimenting with new innovations
 4. Reduce the dependencies on foreign and properiatary infrastructure
 5. Maintain privacy by keeping all data locally and limiting the amount of personal data stored
+
+
 
 More information regarding the Digital Twin can be found in the following seminar:
 
@@ -151,7 +157,11 @@ This code is released as open source, you can create your own copy of this to us
 
 If you want to receive a closed source license, please contact Christian Landgren at Iteam.
 
-- `main` :: is a protected branch and requires PR:s to be changed, this is automatically synced with CI environment.
-- `Releases` :: create a new Release in the Github UI and when published, a new build will automatically be pushed to prod.
+- `main` :: protected branch that requires PR:s to be changed (automatically synced with CI environment).
+- `Releases` :: automatically built and pushed to prod when approved.
 
 Predictive Movement is free and open source software [licensed by Iteam Solutions AB](LICENSE).
+
+<p align="center">
+<img alt="ad87b383-be1e-4447-94b4-f5c8c0986cd8" src="https://github.com/fernand0labra/srt-digital-twin/assets/70638694/ccfd2b14-abd2-4823-b7e1-9ba99b8f8a84">
+</p>
