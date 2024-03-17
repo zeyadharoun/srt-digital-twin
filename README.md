@@ -68,7 +68,7 @@ A correct execution of the script will create a functioning web server listening
 
 The kubernetes server-side setup is developed with [Skaffold](https://skaffold.dev/), an open source platform developed by Google to improve Kubernetes' synthax and allow easier deployments of higher cluster complexity. The configuration for every cluster node (e.g. image, service, port) is defined on a YAML file under the following folders:
 
-* The cluster requirements (e.g. namespaces, certificate manager, ingress controller, etc.) are provided under [*/k8s/reqs/*](/k8s/reqs/).
+* The cluster requirements (e.g. certificate manager, ingress controller, etc.) are provided under [*/k8s/reqs/*](/k8s/reqs/).
 * The cluster dependencies are provided under [*/k8s/deps/*](/k8s/deps/).
 * The cluster Digital Twin can also be deployed and is provided under [*/k8s/base/*](/k8s/base/).
 
