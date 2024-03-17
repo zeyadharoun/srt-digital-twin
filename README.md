@@ -87,7 +87,7 @@ skaffold run  # Initiate Configuration Parsing
 
 ## Project Dependencies
 
-The project relias on a set of dependencies for the obtention of geolocation data, public transport lines and routes with their respective driving duration. In the following subsections, an explanation on the tool and use of the dependency is given.
+The project relias on a set of dependencies for the obtention of geolocation data, public transport lines and routes with driving duration.
 
 ### Geolocation Data
 
