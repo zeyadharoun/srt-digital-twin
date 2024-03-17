@@ -87,25 +87,35 @@ skaffold run  # Initiate Configuration Parsing
 
 ## Project Dependencies
 
-The project relias on a set of dependencies for the obtention of GPS data, public transport lines and routes with their respective driving duration. In the following subsections, an explanation on the tool and use of the dependency is given.
+The project relias on a set of dependencies for the obtention of geolocation data, public transport lines and routes with their respective driving duration. In the following subsections, an explanation on the tool and use of the dependency is given.
 
-### GPS Data
+### Geolocation Data
 
 #### [Pelias Geocoder](https://github.com/pelias/pelias)
 
-Pelias is a search engine for places worldwide, powered by open data. It turns addresses and place names into geographic coordinates, and turns geographic coordinates into places and addresses. The software imports data from [Lantmäteriet](https://www.lantmateriet.se/en/about-lantmateriet/), a swedish authority that i.a. makes geodata available in society. The data can be however substituted by any CSV file with the same format as the downloaded counterpart.
+Pelias is a search engine for places worldwide, powered by open data. It turns addresses and place names into geographic coordinates, and turns geographic coordinates into places and addresses. 
 
-#### General Transit Feed Specification (GTFS) Data
+The software imports data from [Lantmäteriet](https://www.lantmateriet.se/en/about-lantmateriet/), a swedish authority that i.a. makes geodata from Sweden available. The data can be however substituted by any CSV file with the same format as the downloaded counterpart.
 
-GTFS-data from [Trafiklab](https://developer.trafiklab.se/)
+#### [Open Street Map (OSM)](https://www.openstreetmap.org/)
+
+OSM is an initiative to create and provide free geographic data, such as street maps, to anyone. The data is used by OSRM routing engine to find the best route for the vehicles.
 
 ### Public Transport
 
+#### [General Transit Feed Specification (GTFS) Data](https://gtfs.org/)
+
+GTFS is an Open Standard used to distribute relevant information about transit systems to riders. It allows public transit agencies to publish their transit data in a format that can be consumed by a wide variety of software applications. GTFS consists of two main parts: 
+* **GTFS Schedule** contains information about routes, schedules, fares, and geographic transit details.
+* **GTFS Realtime** contains trip updates, vehicle positions, and service alerts.
+
+The data is imported from [Trafiklab](https://www.trafiklab.se/about/), a service developed and managed by [Samtrafiken](https://samtrafiken.se/about-us/) that provides API access to the regional public transport data of Sweden.
+
 ### Routing Software
 
-#### Open Source Routing Machine (OSRM)
+#### [Open Source Routing Machine (OSRM)](https://github.com/Project-OSRM/osrm-backend)
 
-A routing software to find best routes and drive duration on the road network between two geopoints. Imports sweden data.
+OSRM is a high performance routing engine designed to run on OpenStreetMap data. The software finds the best routes and drive durations on the road network between two geopoints.
 
 #### [Vehicle Routing Open-source Optimization Machine (VROOM)](https://github.com/VROOM-Project/vroom)
 
@@ -115,41 +125,36 @@ VROOM is a vehicle routing engine that extends OSRM by choosing the vehicles and
 2. Single-location pickup and/or delivery tasks
 3. Pickup-and-delivery tasks that should happen within the same route.
 
-#### Open Trip Planner (OTP)
-Finding the fastest route between two points in the public transport network. Imports GTFS data from
+#### [Open Trip Planner (OTP)](https://github.com/opentripplanner/OpenTripPlanner)
+
+OTP is an open source trip planner, focusing on travel by scheduled public transportation in combination with bicycling, walking, and other mobility services. 
+
+The software builds its representation of the transportation network from open data in open standard file formats (primarily GTFS and OpenStreetMap). OTP applies real-time updates and alerts with immediate visibility to clients, finding itineraries that account for disruptions and service changes.
 
 ### Others
 
-#### Elasticsearch Engine
+#### [Elasticsearch Engine](https://github.com/elastic/elasticsearch)
 
-This is used to gather realtime statistics.
+Elasticsearch is a distributed search and analytics engine optimized for speed and relevance on production-scale workloads. The software is used to gather realtime statistics of the simulation, which can be seen through [Kibana](https://github.com/elastic/kibana), a browser-based dashboard.
 
-#### Kibana
+#### [OpenMapTiles (OMT)](https://github.com/openmaptiles/openmaptiles)
 
-This is used to gather realtime statistics.
-
-#### OpenTiles
-
-Self hosted tiles server to provide 3d vector maps.
+OMT is an extensible and open tile schema based on the OpenStreetMap. This project is used to generate vector tiles for online zoomable maps. The visualisation module does not currently use OMT; instead the 3D vector relies on [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/guides/), a client-side JavaScript library for building web maps.
 
 
-There is a shared Mapbox Access token inside `packages/visualisation/.env`. If you want to use your own token you will need to generate a new one.
 
-1. Go to (https://www.mapbox.com)[https://www.mapbox.com] and login or create an account.
-2. Go to (https://account.mapbox.com)[https://account.mapbox.com] and create an Access token.
-3. Copy the generated token to your clipboard.
-4. Open the `packages/visualisation/.env` file.
-5. Replace the token on the line starting with `VITE_MAPBOX_ACCESS_TOKEN=`.
 
-> NOTE: if you lack a Mapbox Access token or if there is something wrong with it, you can still access the visualisation in a browser but the background will be a solid gray instead of a map.
+A Mapbox access token should be generated after creating a [Mapbox account](https://www.mapbox.com). Once the token has been obtained, it needs to be placed in [*packages/visualisation/.env*] with key name **VITE_MAPBOX_ACCESS_TOKEN**.
+
+> NOTE: If you lack a Mapbox Access token or there is something wrong with it, you can still access the visualisation in a browser but the background will be a solid gray instead of a map.
 
 ## Contributions
 
-This code is released as open source - which means you can create your own copy of this to use within your own fleet if you want to. You can also contribute by sending Pull Requests or issues to us and we will review and merge them. 
+This code is released as open source, you can create your own copy of this to use within your own fleet if you want to. You can also contribute by sending Pull Requests or issues to us and we will review and merge them. 
 
 If you want to receive a closed source license, please contact Christian Landgren at Iteam.
 
-- `main` — is a protected branch and requires PR:s to be changed, this is automatically synced with CI environment.
-- `Releases` - To push a new release - create a new Release in the Github UI and when published, a new build will automatically be pushed to prod.
+- `main` :: is a protected branch and requires PR:s to be changed, this is automatically synced with CI environment.
+- `Releases` :: create a new Release in the Github UI and when published, a new build will automatically be pushed to prod.
 
 Predictive Movement is free and open source software [licensed by Iteam Solutions AB](LICENSE).
