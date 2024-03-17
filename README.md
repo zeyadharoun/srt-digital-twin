@@ -21,8 +21,18 @@ Predictive Movement aims to create a digital platform that will act as a collabo
 </p>
 
 More information regarding Predictive Movement can be found in the following videos:
+> NOTE: The language of the videos is Swedish.
 
-// Insert Explanatory Videos
+<table>
+ <tr>
+  <td>
+    <a href="https://www.youtube.com/watch?v=IiRz8nRPW3s"><img width=600 src="https://github.com/fernand0labra/srt-digital-twin/assets/70638694/04a58ddf-f17d-4c2f-8c04-7377927d714f"/></a>
+  </td>
+  <td>
+    <a href="https://www.youtube.com/watch?v=LmfDWgrOjLI"><img width=600 src="https://github.com/fernand0labra/srt-digital-twin/assets/70638694/4634e0cc-5182-45b9-8b0f-ca515ad35c4c"/></a>
+  </td>
+ </tr>
+</table>
 
 ### About Digital Twin
 
@@ -36,11 +46,13 @@ The project has the following objectives:
 4. Reduce the dependencies on foreign and properiatary infrastructure
 5. Maintain privacy by keeping all data locally and limiting the amount of personal data stored
 
-
-
 More information regarding the Digital Twin can be found in the following seminar:
 
-// Insert Digital Twin Seminar
+<p align='Center'>
+ <a href="https://www.youtube.com/watch?v=rBgcNeALxgI">
+  <img width=603 src="https://github.com/fernand0labra/srt-digital-twin/assets/70638694/f00e9fc8-6482-4844-9e5d-ebccdca8b379"/>
+ </a> 
+</p>
 
 ## Installation
 
