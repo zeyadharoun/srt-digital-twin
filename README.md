@@ -7,7 +7,7 @@
 2. [Installation](#installation)
     1. [Docker Setup](#docker-setup)
     2. [Kubernetes Setup](#kubernetes-setup)
-3. [Project Dependencies](#configuration-dependencies)
+3. [Project Dependencies](#project-dependencies)
 4. [Contributions](#contributions)
 
 ## Introduction
@@ -141,10 +141,7 @@ Elasticsearch is a distributed search and analytics engine optimized for speed a
 
 OMT is an extensible and open tile schema based on the OpenStreetMap. This project is used to generate vector tiles for online zoomable maps. The visualisation module does not currently use OMT; instead the 3D vector relies on [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/guides/), a client-side JavaScript library for building web maps.
 
-
-
-
-A Mapbox access token should be generated after creating a [Mapbox account](https://www.mapbox.com). Once the token has been obtained, it needs to be placed in [*packages/visualisation/.env*] with key name **VITE_MAPBOX_ACCESS_TOKEN**.
+A Mapbox access token should be generated after creating a [Mapbox account](https://www.mapbox.com). Once the token has been obtained, it needs to be placed in [*packages/visualisation/.env*](packages/visualisation/.env) with key name **VITE_MAPBOX_ACCESS_TOKEN**.
 
 > NOTE: If you lack a Mapbox Access token or there is something wrong with it, you can still access the visualisation in a browser but the background will be a solid gray instead of a map.
 
