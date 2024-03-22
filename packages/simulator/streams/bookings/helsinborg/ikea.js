@@ -19,7 +19,7 @@ const Booking = require('../../../lib/class/booking')
 const { error } = require('../../../lib/log')
 
 const streamsUrl =
-  process.env.STREAMS_URL || 'https://streams.predictivemovement.com:4001/addresses'
+  process.env.STREAMS_URL || 'https://sample-address:4100/addresses'
 
 function read() {
   return from(readCsv(process.cwd() + '/data/bookings/helsingborg/ikea.csv')).pipe(

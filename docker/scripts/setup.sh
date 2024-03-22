@@ -79,17 +79,17 @@ docker image pull fernand0labra/digital-twin-visualisation:latest; echo ""; echo
 # Setup requirements for dependencies and digital-twin
 echo "*** Setting up Requirements..."; echo "";
 docker-compose --log-level ERROR --file ../docker-compose-reqs.yaml up --detach;
-print_asterisks 0.1
+print_asterisks 0.2
 
 # Setup dependencies for digital-twin
 echo "*** Setting up Dependencies..."; echo "";
 docker-compose --log-level ERROR --file ../docker-compose-deps.yaml up --detach;
-print_asterisks 0.1
+print_asterisks 0.2
 
 # Setup digital-twin
-echo "*** Setting up Digital-Twin..."; echo "";
-docker-compose --log-level ERROR --file ../docker-compose-twin.yaml up --detach;
-print_asterisks 0.1
+# echo "*** Setting up Digital-Twin..."; echo "";
+# docker-compose --log-level ERROR --file ../docker-compose-twin.yaml up --detach;
+# print_asterisks 0.2
 
 
 echo "*************************************************************************************************";

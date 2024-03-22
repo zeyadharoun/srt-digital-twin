@@ -3,7 +3,7 @@ const polyline = require('polyline')
 const osrmUrl =
   // eslint-disable-next-line no-undef
   process.env.OSRM_URL ||
-  'http://osrm:5000' ||
+  'http://194.28.122.68:5000' ||
   'http://localhost:5000'
 const { warn, write } = require('../log')
 
