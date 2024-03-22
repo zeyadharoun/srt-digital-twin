@@ -4,8 +4,8 @@ services:
   simulator:
     image: fernand0labra/digital-twin-simulator:latest
     environment:
-      - VROOM_URL=http://vroom:3000
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - VROOM_URL=http://194.28.122.68:3000
+      - ELASTICSEARCH_URL=http://194.28.122.68:9200
       - STREAMS_URL=http://sample-address:4001
     volumes:
       - cache-volume:/app/.cache
@@ -28,7 +28,7 @@ services:
   sample-address:
     image: fernand0labra/sample-address:latest
     environment:
-      - PELIAS_HOSTNAME=elasticsearch:9200
+      - PELIAS_HOSTNAME=194.28.122.68:9200
     ports:
       - 4001:4001
 

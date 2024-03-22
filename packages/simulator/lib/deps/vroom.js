@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 // eslint-disable-next-line no-undef
-const vroomUrl = process.env.VROOM_URL || 'http://vroom:3000'
+const vroomUrl = process.env.VROOM_URL || 'http://194.28.122.68:3000'
 const moment = require('moment')
 const { debug, error, info } = require('../log')
 const { getFromCache, updateCache } = require('../cache')

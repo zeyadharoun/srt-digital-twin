@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const { info, error, write, debug } = require('../log')
 const Position = require('../class/geo/position')
 const peliasUrl =
-  process.env.PELIAS_URL || 'http://pelias-api:3100'
+  process.env.PELIAS_URL || 'http://194.28.122.68:3100'
 
 info('Pelias URL', peliasUrl)
 
