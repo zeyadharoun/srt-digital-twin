@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const fetchAdresses = async (query) => {
-  const peliasHostname = process.env.PELIAS_HOSTNAME || 'elasticsearch:9200'
+  const peliasHostname = process.env.PELIAS_HOSTNAME || '194.28.122.68:9200' // 'elasticsearch:9200'
   const url = `http://${peliasHostname}/pelias/_search`
 
   const json = await fetch(url, {
