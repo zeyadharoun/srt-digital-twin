@@ -80,7 +80,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned     # Windows
 
 After checking that the aforementioned requirements are installed, the script proceeds onto pulling the necessary container images. Next, the script deploys requirement and dependency containers followed by the Digital Twin simulator. 
 
-A correct execution of the script will create a functioning web server listening on the local machine. Choosing a browser and typing 'localhost' will redirect to the visualisation of the simulator.
+A correct execution of the script will create a functioning web server listening on the local machine. Choosing a browser and typing 'localhost:3000' will redirect to the visualisation of the simulator.
 
 ### [Kubernetes Setup](https://kubernetes.io/)
 
