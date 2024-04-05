@@ -19,7 +19,7 @@ services:
   visualisation:
     image: fernand0labra/digital-twin-visualisation:latest
     ports:
-      - 80:80
+      - 3000:80
     depends_on:
       simulator:
           condition: service_started
