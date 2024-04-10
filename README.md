@@ -91,16 +91,18 @@ docker compose ./docker/docker-compose-twin.yaml up --detach
 
 These commands will run the simulator on top of the machine. [Docker compose](https://docs.docker.com/compose/) is specifically used to deploy several instances with the configuration defined in the *.yaml* file. The *--detach* flag allows the instances to run independently of the user closing the terminal. 
 
-In the following image we can see an overview of the Docker Desktop UI. Once the simulator is running three containers with different functionalites will be visible. The checkboxes on the left of each name allows *PAUSE/STOP/START* on the simulation. The logs or outputs from the process can be seen by clicking on the name of each container.
+In the following image we can see an overview of the Docker Desktop UI. Once the simulator is running three containers with different functionalites will be visible. The checkboxes on the left of each name allow *PAUSE/STOP/START* on the simulation. The logs or outputs from the process can be seen by clicking on the name of each container.
 
-Image
+<p align="center">
+<img alt="ab52892d-a7a4-4fb3-920f-e9d0f067b50d" src="https://github.com/fernand0labra/srt-digital-twin/assets/70638694/ab52892d-a7a4-4fb3-920f-e9d0f067b50d">
+</p>
 
-The visualisation of the experiments can be seen by typing *localhost:3000* on any browser of choice. After every simulated experiment the *simulator* container in Docker will exit, therefore to run another experiment is necessary to start the container with the aforemenetioned procedure.
+The visualisation of the experiments can be seen by typing *localhost:3000* on any browser of choice. After every simulated experiment the *simulator* container in Docker will exit, therefore to run another experiment is necessary to start the container with the aforementioned procedure.
 
 
 ### [Node.js Setup](https://kubernetes.io/)
 
-The Node.js setup is also avaiable for both Linux and Windows. The deployment requires the installation of the [Node.js (v16)](https://nodejs.org/en/blog/release/v16.16.0) runtime environment, which allows the execution of i.a. web servers and javascript implementations.
+The Node.js setup is also available for both Linux and Windows. The deployment requires the installation of the [Node.js (v16)](https://nodejs.org/en/blog/release/v16.16.0) runtime environment, which allows the execution of i.a. Javascript web servers.
 
 Once the installation is complete, the simulator can be run by typing the following command in Powershell or Terminal. In comparison with the Docker setup, Node Package Manager (NPM) displays all the logs from the different processes in the same terminal and requires typing the commands with every different experiment.
 
