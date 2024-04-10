@@ -4,11 +4,14 @@
 1. [Introduction](#introduction)
     1. [About Predictive Movement](#about-predictive-movement)
     2. [About Digital Twin](#about-digital-twin)
-2. [Installation](#installation)
+2. [Client Installation](#client-installation)
+    1. [Docker Setup](#docker-setup)
+    2. [Node.js Setup](#node-js-setup)
+3. [Server Installation](#server-installation)
     1. [Docker Setup](#docker-setup)
     2. [Kubernetes Setup](#kubernetes-setup)
-3. [Project Dependencies](#project-dependencies)
-4. [Contributions](#contributions)
+4. [Project Dependencies](#project-dependencies)
+5. [Contributions](#contributions)
 
 ## Introduction
 
@@ -54,28 +57,73 @@ More information regarding the Digital Twin can be found in the following semina
  </a> 
 </p>
 
-## Installation
+## Client Installation
 
-This repository offers two solutions for the execution of the digital twin. The presented deployment solutions are independent and should not be performed simulatenously.
+This repository offers two local setups for the execution of the digital twin in both a Docker containarized version and as a Node.js package. The presented deployment solutions are independent and should not be performed simulatenously.
 
-* A local setup for the simulator is offered in a Docker containarized version. 
-
-* A server setup is offered in a scaled Kubernetes clustered version. 
-
-Development of the local Docker version allows lower computational requirements to run the digital twin but reduces the clustering configuration provided by Kubernetes.
+> NOTE: Only the client installation is necessary for the simulation, the dependencies are currently hold in a remote server.
 
 ### [Docker Setup](https://www.docker.com/)
 
-A local setup script is provided respectively for Linux bash ([*/docker/scripts/setup.sh*](/docker/scripts/setup.sh))and Windows powershell ([*/docker/scripts/setup.ps1*](/docker/scripts/setup.ps1)). The script depends on both Docker and [Docker Compose](https://docs.docker.com/compose/) for its correct execution. Moreover, a zip file available at the [following link](https://drive.google.com/file/d/1bO9KzSTV8_mfFRXi-5KhKnmtcVOryOby/view?usp=drive_link) should be downloaded to */docker/data/sweden-latest.osm.pbf* .
+The Docker setup is currently available for both Windows and Linux. This software deploys another OS with specific functionalities (e.g. the simulator) on top of the running machine. The developers of this tool have provided a [User Interface (UI)](https://www.docker.com/products/docker-desktop/) for easier integration. 
+
+After downloading and installing the UI without any extra configurations, it's possible to download the OS files that will run in the machine by searching in the uppermost tab the following names:
+
+* fernand0labra/digital-twin-simulator
+* fernand0labra/digital-twin-visualisation
+* fernand0labra/sample-address
+
+Selecting *PULL* will download the image to our local machine. Once the installation is complete, the following step will deploy the simulation and varies depending on the OS of the machine due to the naming of the path.
+
+```
+# Windows Deployment (Powershell)
+
+cd <PATH_TO_REPOSITORY>  # e.g. C:\Users\MyUser\Desktop\srt-digital-twin\
+docker compose .\docker\docker-compose-twin.yaml up --detach
+
+---
+
+# Linux Deployment (Terminal)
+
+cd <PATH_TO_REPOSITORY>  # e.g. ~/srt-digital-twin/
+docker compose ./docker/docker-compose-twin.yaml up --detach
+```
+
+These commands will run the simulator on top of the machine. [Docker compose](https://docs.docker.com/compose/) is specifically used to deploy several instances with the configuration defined in the *.yaml* file. The *--detach* flag allows the instances to run independently of the user closing the terminal. 
+
+In the following image we can see an overview of the Docker Desktop UI. Once the simulator is running three containers with different functionalites will be visible. The checkboxes on the left of each name allows *PAUSE/STOP/START* on the simulation. The logs or outputs from the process can be seen by clicking on the name of each container.
+
+Image
+
+The visualisation of the experiments can be seen by typing *localhost:3000* on any browser of choice. After every simulated experiment the *simulator* container in Docker will exit, therefore to run another experiment is necessary to start the container with the aforemenetioned procedure.
+
+
+### [Node.js Setup](https://kubernetes.io/)
+
+The Node.js setup is also avaiable for both Linux and Windows. The deployment requires the installation of the [Node.js (v16)](https://nodejs.org/en/blog/release/v16.16.0) runtime environment, which allows the execution of i.a. web servers and javascript implementations.
+
+Once the installation is complete, the simulator can be run by typing the following command in Powershell or Terminal. In comparison with the Docker setup, Node Package Manager (NPM) displays all the logs from the different processes in the same terminal and requires typing the commands with every different experiment.
+
+```
+npm install;  npm start
+```
+
+## Server Installation
+
+This repository includes the server setup of the dependencies and requirements of the project. A local setup is offered in both a Docker containarized version and a scaled Kubernetes clustered version. Development of the local Docker version allows lower computational requirements to run the server but reduces the clustering configuration provided by Kubernetes.
+
+> NOTE: The server installation is specifically designed for software developers.
+
+### [Docker Setup](https://www.docker.com/)
+
+A local setup script is provided for Linux bash ([*/docker/scripts/setup.sh*](/docker/scripts/setup.sh)). The script depends on both Docker and [Docker Compose](https://docs.docker.com/compose/) for its correct execution. Moreover, a zip file available at the [following link](https://drive.google.com/file/d/1bO9KzSTV8_mfFRXi-5KhKnmtcVOryOby/view?usp=drive_link) should be downloaded to */docker/data/sweden-latest.osm.pbf* .
 
 Running on a Linux OS requires setting up user permission for execution and on a Windows OS, user permission for non-proprietary script execution as shown below:
 
 ```
 # User Execution Permission
 
-chmod u+x ~/srt-digital-twin/docker/scripts/setup.sh  # Linux
-
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned     # Windows
+chmod u+x ~/srt-digital-twin/docker/scripts/setup.sh
 ```
 
 After checking that the aforementioned requirements are installed, the script proceeds onto pulling the necessary container images. Next, the script deploys requirement and dependency containers followed by the Digital Twin simulator. 
@@ -102,6 +150,7 @@ sudo install skaffold /usr/local/bin/
 
 skaffold run  # Initiate Configuration Parsing
 ```
+
 
 ## Project Dependencies
 
