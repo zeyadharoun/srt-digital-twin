@@ -9,14 +9,16 @@ const {
   zipWith,
 } = require('rxjs/operators')
 const perlin = require('perlin-noise')
-
+const { debug, info, write } = require('./lib/log')
 const pelias = require('./lib/deps/pelias')
 const { addMeters } = require('./lib/utils/geo/distance')
 const { randomNames } = require('./lib/utils/personNames')
 const { randomize } = require('./simulator/address')
-const kommuner = require('./streams/index').read()
+
+const fleets = require('./config/index').read()
+const kommuner = require('./streams/index').read(fleets)
+
 const { safeId } = require('./lib/utils/id')
-const { debug, info, write } = require('./lib/log')
 
 const NUMBER_OF_CITIZENS = 3000
 

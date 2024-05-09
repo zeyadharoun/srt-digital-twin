@@ -24,6 +24,7 @@ const Pelias = require('../lib/deps/pelias')
 const { getCitizensInSquare } = require('../simulator/citizens.js')
 const { getAddressesInArea } = require('../simulator/address.js')
 const { municipalities } = require('../config/index.js')
+const { info } = require('../lib/log.js')
 const commercialAreas = from(require('../data/geo/scb_companyAreas.json').features)
 
 const activeMunicipalities = municipalities()
@@ -77,8 +78,7 @@ async function getWorkplaces(position, nrOfWorkplaces = 100) {
 function read({ fleets }) {
   return from(data).pipe(
     filter(({ namn }) =>
-      activeMunicipalities.some((name) => namn.startsWith(name))
-    ),
+      activeMunicipalities.some((name) => namn.startsWith(name))),
     map((kommun) => {
       return {
         ...kommun,

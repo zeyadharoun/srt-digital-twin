@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const assert = require('assert')
 const { fetchAdresses } = require('../lib/elasticsearch')
+const { info } = require('console')
 
 const query = (topleft, bottomright, size, seed) => ({
   size,
@@ -60,7 +61,9 @@ app.get('/', (req, res) => {
     .then((addresses) => {
       res.json(addresses)
     })
-    .catch((err) => Promise.reject(err))
+    .catch((err) => {
+      Promise.reject(err)
+    })
 })
 
 module.exports = app

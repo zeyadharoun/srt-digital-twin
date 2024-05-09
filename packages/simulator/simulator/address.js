@@ -5,7 +5,7 @@ const { addMeters } = require('../lib/utils/geo/distance')
 const fetch = require('node-fetch')
 const { error } = require('../lib/log')
 const streamsUrl =
-  process.env.STREAMS_URL || 'https://sample-address:4100/addresses'
+  process.env.STREAMS_URL || 'https://194.28.122.68:4100/addresses'
 
 const getAddressesInBoundingBox = (
   topLeft,

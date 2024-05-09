@@ -2,23 +2,8 @@ const { stops } = require('../transport/publicTransport')('gotland')
 const { filter } = require('rxjs')
 const Region = require('../../lib/class/geo/region')
 
-// const includedMunicipalities = [
-//   'Fårösunds kommun',
-//   'Lärbros kommun',
-//   'Romaklosters kommun',
-//   'Ljugarns kommun',
-//   'Visby stad',
-//   'Hemses kommun',
-//   'Havdhems kommun',
-//   'Hoburgs kommun',
-//   'Klintehamns kommun',
-//   'Stenkumlas kommun',
-//   'Tingstädes kommun',
-// ]
-
 const includedMunicipalities = [
-  'Ljugarns kommun',
-  'Visby stad',
+  'Gotlands Region',
 ]
 
 const gotland = (municipalitiesStream) => {
