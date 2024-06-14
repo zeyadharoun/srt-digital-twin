@@ -1,6 +1,7 @@
 const { stops } = require('../transport/publicTransport')('norrbotten')
 const { filter } = require('rxjs')
 const Region = require('../../lib/class/geo/region')
+const { info } = require('../../lib/log')
 
 const includedMunicipalities = [
   'Arjeplogs kommun',
