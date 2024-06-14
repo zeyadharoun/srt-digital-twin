@@ -41,8 +41,8 @@ const nearest = (position, layers = 'address,venue') => {
       })
     )
     .catch((e) => {
-      const error = new Error().stack
-      error(`Error in pelias nearest\n${error}\n${e}\n\n`)
+      const errorObj = new Error().stack
+      error(`Error in pelias nearest\n${errorObj}\n${e}\n\n`)
     })
 
   return promise
