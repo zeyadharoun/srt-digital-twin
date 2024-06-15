@@ -253,14 +253,106 @@ const GenericInfo = ({ data }) => {
   )
 }
 
+// 6. Visualize bus stops with citizens in the simulation
+const BusStopInfo = ({ data }) => {
+  return (
+    <Wrapper left={data.x} top={data.viewport.height - data.y + 20}>
+      <Paragraph>
+        <strong>{data.id}</strong>
+      </Paragraph>
+      <Paragraph>&nbsp;</Paragraph>
+      <Paragraph>{data.title}</Paragraph>
+      <Paragraph>{data.subTitle}</Paragraph>
+      <Paragraph>Typ: {data.type}</Paragraph>
+      <Paragraph>Passagerare: {data.passagerare}</Paragraph>
+      <Paragraph>Kommun: <strong>{data.kommun}</strong></Paragraph>
+    </Wrapper>
+  )
+}
+
+const BusLineInfo = ({ data }) => {
+  return (
+    <Wrapper left={data.x} top={data.viewport.height - data.y + 20}>
+      <Paragraph>
+        <strong>{data.id}</strong>
+      </Paragraph>
+      <Paragraph>&nbsp;</Paragraph>
+      <Paragraph>{data.title}</Paragraph>
+      <Paragraph>{data.subTitle}</Paragraph>
+      <Paragraph>Typ: {data.type}</Paragraph>
+      <Paragraph>From: <strong>{data.from}</strong></Paragraph>
+      <Paragraph>To: <strong>{data.to}</strong></Paragraph>
+    </Wrapper>
+  )
+}
+
+const BusInfo = ({ data }) => {
+  return (
+    <Wrapper left={data.x} top={data.viewport.height - data.y + 20}>
+      <div>
+        <Paragraph>
+          <strong>{`${vehicleName(data.vehicleType)} ${data.id}`}</strong>
+        </Paragraph>
+        {data.lineNumber !== undefined && (
+          <Paragraph>
+            Linje: <strong>{data.lineNumber}</strong>
+          </Paragraph>
+        )}
+
+        <Paragraph>&nbsp;</Paragraph>
+        <Paragraph>
+          Flotta: <strong>{data.fleet}</strong>
+        </Paragraph>
+        <Paragraph>
+          Status: <strong>{data.status}</strong>
+        </Paragraph>
+
+
+        <Paragraph>&nbsp;</Paragraph>
+        {data.passengerCapacity && (
+          <Paragraph>
+            Kapacitet: <strong>{data.passengerCapacity} passagerare</strong>
+          </Paragraph>
+        )}
+
+        <Paragraph>&nbsp;</Paragraph>
+        {data.passengerCapacity && (
+          <Paragraph>
+            Lastat: <strong>{data.passengers} passagerare</strong>
+          </Paragraph>
+        )}
+      </div>
+
+      <Paragraph>&nbsp;</Paragraph>
+      {data.passengerCapacity && (
+        <div>
+          <Paragraph>Passagerarfyllnadsgrad:</Paragraph>
+          <ProgressBar
+            completed={Math.round(
+              Math.min(100, (data.passengers / data.passengerCapacity) * 100) ||
+                0
+            )}
+          />
+        </div>
+      )}
+    </Wrapper>
+  )
+}
+
 const HoverInfoBox = ({ data }) => {
   switch (data.type) {
     case 'car':
       return <CarInfo data={data} />
+    case 'bus':
+      return <BusInfo data={data} />
     case 'passenger':
       return <PassengerInfo data={data} />
     case 'measureStation':
       return <MeasurementStationInfo data={data} />
+    case 'busStop':
+        return <BusStopInfo data={data} />
+    case 'busLine':
+        return <BusLineInfo data={data} />
     default:
       return <GenericInfo data={data} />
   }

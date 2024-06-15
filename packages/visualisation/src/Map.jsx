@@ -90,26 +90,29 @@ const Map = ({
       })
     },
   })
-
+  
   const busStopLayer = new ScatterplotLayer({
     id: 'busStop-layer',
-    data: busStops,
+    data: bookings.filter((b) => b.type === 'busstop'),
     stroked: false,
     filled: true,
     radiusScale: 3,
     radiusMinPixels: 1,
-    radiusMaxPixels: 3,
-    getPosition: (c) => {
-      return c.position
+    radiusMaxPixels: 5,
+    getPosition: (d) => {
+      return d.pickup
     },
     getRadius: () => 4,
-    getFillColor: [255, 255, 255, 20],
+    // NOTE: 7. Update visualization when no passengers are in the bus stops
+    getFillColor: (d) => { return d.passagerare > 0 ? [255, 255, 255, 20] : [0, 0, 0, 255]},
     pickable: true,
     onHover: ({ object, x, y, viewport }) => {
       if (!object) return setHoverInfo(null)
       setHoverInfo({
         type: 'busStop',
         title: 'Busshållplats ' + object.name,
+        kommun: object.kommun,
+        passagerare: object.passagerare,
         x,
         y,
         viewport,
@@ -125,8 +128,8 @@ const Map = ({
     },
     properties: {
       name: `Buss, linje #${lineNumber}`,
-      from,
-      to,
+      from: from,
+      to: to,
     },
   })
   const geoJsonFromBusLines = (lineShapes) => {
@@ -140,6 +143,8 @@ const Map = ({
       setHoverInfo({
         type: 'busLine',
         title: object.properties.name,
+        from: object.properties.from,
+        to: object.properties.to,
         x,
         y,
         viewport,
@@ -329,7 +334,7 @@ const Map = ({
       if (!object) return setHoverInfo(null)
       setHoverInfo({
         ...object,
-        type: 'car',
+        type: 'bus',
         x,
         y,
         viewport,

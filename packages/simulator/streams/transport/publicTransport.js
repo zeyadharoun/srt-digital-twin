@@ -53,6 +53,9 @@ async function getStopsForDate(date, operator) {
     filter(({ trip: { serviceId } }) => todaysServices.includes(serviceId)),
     addProp('stop', (stop) => allStops.get(stop.stopId)),
     addProp('position', ({ stop }) => stop.position),
+    addProp('name', ({ stop }) => stop.name),
+    addProp('kommun', ({ stop }) => stop.kommun),
+    addProp('passagerare', ({ stop }) => 5),
     filter((stop) => {
       // NOTE: This is a relatively manual way of filtering out routes and stops that are not actually buses.
       return excludedLineNumberArray.indexOf(stop.lineNumber) === -1
@@ -72,6 +75,10 @@ function publicTransport(operator) {
     mergeAll(),
     shareReplay()
   )
+
+  // NOTE: 4. Create bookings for passengers between two stops
+  // Calculate distances between bus stops up to 9 km
+  // Instantiate and divide citizens between bus stops :: [7, 9] (km)
 
   return {
     stops: todaysStops,

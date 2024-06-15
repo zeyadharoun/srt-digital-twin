@@ -28,6 +28,9 @@ const cleanBookings = () =>
         cost,
         carId: car?.id,
         type,
+        passagerare: pickup.passagerare,
+        name: pickup.name,
+        kommun: pickup.kommun
       })
     )
   )

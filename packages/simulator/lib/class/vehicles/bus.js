@@ -1,5 +1,8 @@
 const Vehicle = require('./vehicle')
 
+const { error, info } = require('../../log')
+const { range, share, from } = require('rxjs')
+
 // TODO: create this somewhere else as real fleet
 const lanstrafiken = {
   name: 'Länstrafiken i Norrbotten',
@@ -32,6 +35,7 @@ class Bus extends Vehicle {
     this.heading = heading
     this.kommun = kommun
     this.passengers = []
+    this.passengersLength = 0
     this.startPosition = startPosition
     this.passengerCapacity = passengerCapacity // TODO: fill this from the workshop poll
     this.parcelCapacity = parcelCapacity // TODO: fill this from the workshop poll
@@ -67,6 +71,20 @@ class Bus extends Vehicle {
 
     await this.waitAtPickup()
 
+    // NOTE: 5. Fetch citizens from bus stops and update passenger capacity
+
+    // If there is capacity for all waiting passengers
+    if (this.passengerCapacity - (this.passengersLength + this.booking.pickup.passagerare) > 0){
+      this.passengersLength += this.booking.pickup.passagerare
+      this.booking.pickup.passagerare = 0
+    }
+    // If there is capacity for some waiting passengers
+    else if (this.passengerCapacity - this.passengersLength < this.booking.pickup.passagerare){
+      somePassengers = this.passengerCapacity - this.passengersLength
+      this.booking.pickup.passagerare -= somePassengers
+      this.passengersLength += somePassengers
+    }
+
     this.lineNumber = this.booking.lineNumber
       ? this.booking.lineNumber
       : this.lineNumber
@@ -86,6 +104,9 @@ class Bus extends Vehicle {
 
   dropOff() {
     if (this.booking) {
+      // NOTE: 6. Leave citizens at bus stops and update passenger capacity
+      this.passengerLength = Math.max(0, this.passengerLength - 5)
+
       this.booking.delivered(this.position)
       this.delivered.push(this.booking)
       this.booking = null

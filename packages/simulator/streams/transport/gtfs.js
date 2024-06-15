@@ -14,6 +14,40 @@ const Position = require('../../lib/class/geo/position')
 
 const MONTH = 1000 * 60 * 60 * 24 * 30
 
+
+// ******************************************************************************
+// The stop includes a list of citizens waiting to be travelling
+
+const journeysPersonDay = 0.2      // Ratio of citizens taking public transport
+const distanceTravelledKM = 8     // Mean distance travelled by citizen on km
+
+// NOTE: 1. Obtain bus stop kommun
+const kommuner = require('../../data/geo/kommuner.json')
+let kommunerGeo = []
+
+kommuner.forEach(kommun => {
+  let kommunObj = {name: "", box: {minLonPoint: [], maxLonPoint: [], minLatPoint: [], maxLatPoint: []}}
+
+  kommunObj.name = kommun.namn
+
+  let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity
+  let minLonPoint = [],  maxLonPoint = [],   minLatPoint = [],  maxLatPoint = []
+
+  kommun.geometry.coordinates[0].forEach(coord => {
+      const [lon, lat] = coord;
+      if (lon < minLon){ minLon = lon; minLonPoint = [lon, lat] }  if (lon > maxLon){ maxLon = lon; maxLonPoint = [lon, lat] }
+      if (lat < minLat){ minLat = lat; minLatPoint = [lon, lat] }  if (lat > maxLat){ maxLat = lat; maxLatPoint = [lon, lat] }
+  });
+
+  kommunObj.box = {minLonPoint: minLonPoint, maxLonPoint: maxLonPoint, minLatPoint: minLatPoint, maxLatPoint: maxLatPoint}
+  kommunerGeo.push(kommunObj)
+})
+
+// NOTE: 2. Obtain number of citizens living in the kommun
+const population = require('../../data/population/folkmängd-i-sverige-2023.json')
+
+// ******************************************************************************
+
 const downloadIfNotExists = (operator) => {
   const zipFile = path.join(__dirname, `../../data/transport/${operator}.zip`)
   return new Promise((resolve, reject) => {
@@ -104,10 +138,45 @@ function gtfs(operator) {
         position: new Position({ lat: +lat, lon: +lon }),
         station: parent_station,
         platform: platform_code,
+        kommun: "",
       })
     ),
     shareReplay()
   )
+
+  // NOTE: 1. Obtain bus stop kommun
+  stops.forEach(stop => {
+      const { lon, lat } = stop.position
+      kommunerGeo.forEach(kommun => {
+        if (lon < kommun.box.maxLonPoint[0] && lon > kommun.box.minLonPoint[0] && lat > kommun.box.minLatPoint[1] && lat < kommun.box.maxLatPoint[1])
+          stop.kommun = kommun.name
+      })
+    }
+  )
+  
+  // NOTE: 2. Obtain number of citizens living in the kommun
+  async function getBusStopKommunSet(){
+    return new Promise((resolve, reject) => {
+      stops.pipe(map(stop => stop.kommun), toArray()).subscribe(data => resolve([...new Set(data)]))
+    })
+  }
+  
+  // NOTE: 3. Calculate number of citizens taking public transport in kommun :: (ratio)
+  (async () => {await getBusStopKommunSet().then(busStopKommunSet => {  // (async () => {info(JSON.stringify(await getBusStopKommunSet()))})()
+    const kommunPopulation = []
+    busStopKommunSet.forEach(kommun => {
+      let populationObj = {name: "", journeysDay: 0}
+      let kommunName = kommun.split(' ')[0]
+
+      populationObj.name = kommunName
+      populationObj.journeysDay = Math.floor(population[kommunName] * journeysPersonDay)
+      
+      if (populationObj.journeysDay)
+        kommunPopulation.push(populationObj)
+    })
+  })})()
+
+// ******************************************************************************
 
   const trips = gtfsStream('trips').pipe(
     map(
