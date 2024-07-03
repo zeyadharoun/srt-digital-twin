@@ -103,8 +103,8 @@ const Map = ({
       return d.pickup
     },
     getRadius: () => 4,
-    // NOTE: 7. Update visualization when no passengers are in the bus stops
-    getFillColor: (d) => { return d.passagerare > 0 ? [255, 255, 255, 20] : [0, 0, 0, 255]},
+    // Update visualization when no passengers are in the bus stops
+    getFillColor: (d) => { return d.passagerare > 0 ? [0, 0, 0, 255] : [255, 255, 255, 20]},
     pickable: true,
     onHover: ({ object, x, y, viewport }) => {
       if (!object) return setHoverInfo(null)
@@ -395,7 +395,7 @@ const Map = ({
     getFillColor: (
       { status } // TODO: Different colors for IKEA & HM
     ) =>
-      status === 'Delivered'
+        status === 'Delivered'
         ? [170, 255, 187]
         : status === 'Picked up'
         ? [170, 187, 255, 55]

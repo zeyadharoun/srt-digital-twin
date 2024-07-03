@@ -82,7 +82,7 @@ class Citizen {
           case 'goToWork':
             return of(
               new Booking({
-                type: 'passenger',
+                type: this.getType(),
                 passenger: this,
                 pickup: this.home,
                 destination: {
@@ -98,7 +98,7 @@ class Citizen {
           case 'goHome':
             return of(
               new Booking({
-                type: 'passenger',
+                type: this.getType(),
                 passenger: this,
                 pickup: {
                   ...this.workplace,
@@ -124,7 +124,7 @@ class Citizen {
               mergeMap(async (lunchPlace) =>
                 from([
                   new Booking({
-                    type: 'passenger',
+                    type: this.getType(),
                     passenger: this,
                     // Pickup to go to lunch
                     pickup: {
@@ -139,7 +139,7 @@ class Citizen {
                   }),
                   new Booking({
                     // Go back from lunch to work
-                    type: 'passenger',
+                    type: this.getType(),
                     passenger: this,
                     pickup: {
                       ...lunchPlace,
@@ -182,6 +182,10 @@ class Citizen {
       mapTo(this),
       share()
     )
+  }
+
+  getType() {
+    return Math.random() < 0.8 ? 'passenger' : 'passengerBus'  // 20% of times passenger takes bus
   }
 
   reset() {

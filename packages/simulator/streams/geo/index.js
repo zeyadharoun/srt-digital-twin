@@ -2,8 +2,8 @@ const { from, share } = require('rxjs')
 
 const regions = {
   norrbotten: require('./norrbotten'),
-  // skane: require('./skane'),
   gotland: require('./gotland'),
+  // skane: require('./skane'),
   // ostergoland: require('./ostergotland')
 }
 

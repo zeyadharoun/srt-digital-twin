@@ -19,6 +19,7 @@ class Bus extends Vehicle {
     finalStop,
     parcelCapacity,
     passengerCapacity,
+    passengerBookings,
     kommun,
     ...vehicle
   }) {
@@ -34,12 +35,13 @@ class Bus extends Vehicle {
     this.vehicleType = 'bus'
     this.heading = heading
     this.kommun = kommun
-    this.passengers = []
+    this.passengerBookings = passengerBookings
     this.passengersLength = 0
     this.startPosition = startPosition
     this.passengerCapacity = passengerCapacity // TODO: fill this from the workshop poll
     this.parcelCapacity = parcelCapacity // TODO: fill this from the workshop poll
     this.co2PerKmKg = 1.3 // NOTE: From a quick google. Needs to be verified.
+
   }
 
   canHandleBooking(booking) {
@@ -71,19 +73,19 @@ class Bus extends Vehicle {
 
     await this.waitAtPickup()
 
-    // NOTE: 5. Fetch citizens from bus stops and update passenger capacity
-
-    // If there is capacity for all waiting passengers
-    if (this.passengerCapacity - (this.passengersLength + this.booking.pickup.passagerare) > 0){
-      this.passengersLength += this.booking.pickup.passagerare
-      this.booking.pickup.passagerare = 0
-    }
-    // If there is capacity for some waiting passengers
-    else if (this.passengerCapacity - this.passengersLength < this.booking.pickup.passagerare){
-      somePassengers = this.passengerCapacity - this.passengersLength
-      this.booking.pickup.passagerare -= somePassengers
-      this.passengersLength += somePassengers
-    }
+    // TODO Optimize observable handling
+    // Fetch citizens from bus stops and update passenger 
+    // this.passengerBookings.pipe(
+    //   filter(passengerBus => passengerBus.pickup.stopId === this.booking.pickup.stopId),
+    //   // filter(passengerBus => passengerBus.status === "New"),
+    // ).subscribe(
+    //   passengerBus => {
+    //     if (this.passengerCapacity - this.passengersLength >= 1){
+    //       passengerBus.status = "Picked Up"
+    //       this.passengersLength += 1
+    //     }
+    //   }
+    // )
 
     this.lineNumber = this.booking.lineNumber
       ? this.booking.lineNumber
@@ -104,8 +106,19 @@ class Bus extends Vehicle {
 
   dropOff() {
     if (this.booking) {
-      // NOTE: 6. Leave citizens at bus stops and update passenger capacity
-      this.passengerLength = Math.max(0, this.passengerLength - 5)
+
+      // TODO Optimize observable handling
+      // Leave citizens at bus stops and update passenger 
+      // this.passengerBookings.pipe(
+      //   filter(passengerBus => passengerBus.destination.stopId === this.booking.pickup.stopId),
+      //   // filter(passengerBus => passengerBus.status === "Picked up"),
+      // ).subscribe(
+      //   passengerBus => {
+      //     passengerBus.status = "Delivered"
+      //     this.booking.pickup.passagerare += 1
+      //     this.passengerLength = Math.max(0, this.passengerLength - 1)
+      //   }
+      // )
 
       this.booking.delivered(this.position)
       this.delivered.push(this.booking)

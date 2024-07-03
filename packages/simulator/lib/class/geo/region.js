@@ -1,4 +1,4 @@
-const { from, mergeMap, merge, Subject, of } = require('rxjs')
+const { from, forkJoin, mergeMap, merge, Subject, of } = require('rxjs')
 const {
   map,
   groupBy,
@@ -27,6 +27,7 @@ const { haversine } = require('../../utils/geo/distance')
 const { taxiDispatch } = require('../../utils/dispatch/taxiDispatch')
 const { error, info } = require('../../log')
 const Booking = require('../booking')
+const Bus = require('../vehicles/bus')
 
 const flattenProperty = (property) => (stream) =>
   stream.pipe(
@@ -106,12 +107,6 @@ class Region {
      * Vehicle streams.
      */
 
-    this.buses = kommuner.pipe(
-      map((kommun) => kommun.buses),
-      mergeAll(),
-      shareReplay()
-    )
-
     this.cars = kommuner.pipe(mergeMap((kommun) => kommun.cars))
 
     this.taxis = kommuner.pipe(
@@ -124,6 +119,39 @@ class Region {
      */
 
     this.citizens = kommuner.pipe(mergeMap((kommun) => kommun.citizens))
+
+    // Update pickup and destination of booking to busStop
+    this.busBookings = this.citizens.pipe(
+      mergeMap(citizen => citizen.bookings),
+      filter(booking => booking.type === 'passengerBus'),
+      mergeMap(booking =>
+        from(nearestBusStop(this.stops, null, booking.pickup.position)).pipe(
+          mergeMap(nearestPickup => {
+            booking.pickup = nearestPickup;
+            return forkJoin({ // Combine multiple observables and wait
+              booking: of({ status: booking.status, destination: booking.destination, pickup: nearestPickup }),
+              nearestDestination: from(nearestBusStop(this.stops, booking.pickup.lineNumber, booking.destination.position))
+            })
+          }),
+          map(({ booking, nearestDestination }) => ({
+            ...booking,
+            destination: nearestDestination
+          })),
+        ),
+      )
+    )
+
+    // Update buses with bus bookings of passengers
+    this.buses = kommuner.pipe(
+      map((kommun) => kommun.buses),
+      mergeAll(),
+      map((bus) => {
+        return new Bus({ ...bus, passengerBookings: this.busBookings.pipe(
+          filter(booking => booking.lineNumber === bus.lineNumber)
+        ) });
+      }),
+      shareReplay(),
+    )
 
     this.stopAssignments = this.trips.pipe(
       groupBy((trip) => trip.kommun),
@@ -156,6 +184,7 @@ class Region {
     this.unhandledBookings = this.citizens.pipe(
       mergeMap((passenger) => passenger.bookings),
       filter((booking) => !booking.assigned),
+      filter((booking) => booking.type != 'passengerBus'),
       catchError((err) => error('unhandledBookings', err)),
       share()
     )
@@ -170,6 +199,7 @@ class Region {
       this.stopAssignments.pipe(
         mergeMap(({ bus, booking }) => bus.handleBooking(booking), 5),
         filter((booking) => !booking.assigned),
+        filter((booking) => booking.type != 'passengerBus'),
         catchError((err) => error('region stopAssignments', err)),
         share()
       ),
@@ -233,6 +263,21 @@ class Region {
         share()
       )
     )
+
+    // TODO Optimize observable handling
+    // this.dispatchedBookings.pipe(
+    //   filter(dispatch => dispatch.type === 'busstop'),
+    //   mergeMap(busStop =>
+    //     this.busBookings.pipe(
+    //       filter(booking => busStop.stop === booking.pickup.stopId ),
+    //       map(busStop => {return busStop 
+    //         ? ({...busStop, passagerare: busStop.passagerare + 1})
+    //         : busStop
+    //       })
+    //     ),
+    //   )
+    // ).subscribe(data => console.log(data))
+
   }
 }
 
@@ -252,5 +297,24 @@ const stopsToBooking = ([pickup, destination]) =>
     lineNumber: pickup.lineNumber ?? destination.lineNumber,
     type: 'busstop',
   })
+
+const nearestBusStop = (stops, lineNumber, location) => {
+  return new Promise((resolve, reject) => {
+    let filterFunction = lineNumber === null ? stop => stop : filter(stop => stop.lineNumber === lineNumber)
+    from(stops).pipe(
+      filterFunction, 
+      map(obj => {return {stopId: obj.stopId, position: obj.position, lineNumber: obj.lineNumber}}),
+      toArray(),
+      map(stops => stops.sort((a, b) => {
+        const aDistance = haversine(a.position, location)
+        const bDistance = haversine(b.position, location)
+        return aDistance - bDistance
+      })[0])
+    ).subscribe({
+      next: nearestStop => resolve(nearestStop),
+      error: err => reject(err)
+    });
+  })
+}
 
 module.exports = Region
