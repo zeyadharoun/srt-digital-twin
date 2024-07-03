@@ -79,14 +79,14 @@ Selecting *PULL* will download the image to our local machine. Once the installa
 # Windows Deployment (Powershell)
 
 cd <PATH_TO_REPOSITORY>  # e.g. C:\Users\MyUser\Desktop\srt-digital-twin\
-docker compose .\docker\docker-compose-twin.yaml up --detach
+docker compose -f .\docker\docker-compose-twin.yaml up --detach
 
 ---
 
 # Linux Deployment (Terminal)
 
 cd <PATH_TO_REPOSITORY>  # e.g. ~/srt-digital-twin/
-docker compose ./docker/docker-compose-twin.yaml up --detach
+docker compose -f ./docker/docker-compose-twin.yaml up --detach
 ```
 
 These commands will run the simulator on top of the machine. [Docker compose](https://docs.docker.com/compose/) is specifically used to deploy several instances with the configuration defined in the *.yaml* file. The *--detach* flag allows the instances to run independently of the user closing the terminal. 
