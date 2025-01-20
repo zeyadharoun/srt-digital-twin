@@ -19,7 +19,7 @@ services:
 
   # *************************************************************** #
   visualisation:
-    image: zeyadharoun/digital-twin-visualisation:latest
+    image: zeyadharoun/digital-twin-visualization:latest
     ports:
       - 3000:80
     depends_on:
