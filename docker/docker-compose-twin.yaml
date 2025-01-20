@@ -2,7 +2,7 @@ services:
 
   # *************************************************************** #
   simulator:
-    image: fernand0labra/digital-twin-simulator:latest
+    image: zeyadharoun/digital-twin-simulator:latest
     environment:
       - VROOM_URL=http://194.28.122.68:3000
       - ELASTICSEARCH_URL=http://194.28.122.68:9200
@@ -13,24 +13,35 @@ services:
       - 4000:4000
     depends_on:
       sample-address:
-        condition: service_started    
+        condition: service_started
+    networks:
+      - app-network
 
   # *************************************************************** #
   visualisation:
-    image: fernand0labra/digital-twin-visualisation:latest
+    image: zeyadharoun/digital-twin-visualisation:latest
     ports:
       - 3000:80
     depends_on:
       simulator:
           condition: service_started
+    networks:
+      - app-network
 
   # *************************************************************** #
   sample-address:
-    image: fernand0labra/sample-address:latest
+    image: zeyadharoun/digital-twin-sample-address:latest
     environment:
       - PELIAS_HOSTNAME=194.28.122.68:9200
     ports:
       - 4001:4001
+    networks:
+      - app-network
 
 volumes:
   cache-volume:
+
+
+networks:
+  app-network:
+    driver: bridge

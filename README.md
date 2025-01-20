@@ -69,9 +69,9 @@ The Docker setup is currently available for both Windows and Linux. This softwar
 
 After downloading and installing the UI without any extra configurations, it's possible to download the OS files that will run in the machine by searching in the uppermost tab the following names:
 
-* fernand0labra/digital-twin-simulator
-* fernand0labra/digital-twin-visualisation
-* fernand0labra/sample-address
+* zeyadharoun/digital-twin-simulator
+* zeyadharoun/digital-twin-visualization
+* zeyadharoun/digital-twin-sample-address
 
 Selecting *PULL* will download the image to our local machine. Once the installation is complete, the following step will deploy the simulation and varies depending on the OS of the machine due to the naming of the path.
 
