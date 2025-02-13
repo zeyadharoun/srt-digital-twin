@@ -583,7 +583,7 @@ const Map = ({
   return (
     <DeckGL
       //mapLib={maplibregl}
-      mapboxApiAccessToken={"pk.eyJ1IjoiYWJvdGE4NSIsImEiOiJjbHkyeTFjbzQwMXd5MmtzYWp4cW9tMTg4In0.d-EDmjH0ID6XX9sN6KvoJg"} // import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
+      mapboxApiAccessToken={"pk.eyJ1IjoiemV5YWRoYXJvdW4iLCJhIjoiY202ejBhZzlqMDBtMDJrczh3N2t0NWFscyJ9.c40bkerUYksJm1hBiqFqcA"} // import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
       // initialViewState={mapState.viewport}
       viewState={mapState}
       ref={map}
@@ -639,7 +639,7 @@ const Map = ({
         //mapLib={maplibregl}
         //mapStyle="https://maptiler.iteam.services/styles/basic-preview/style.json"
         mapStyle="mapbox://styles/mapbox/dark-v10"
-        mapboxApiAccessToken={"pk.eyJ1IjoiYWJvdGE4NSIsImEiOiJjbHkyeTFjbzQwMXd5MmtzYWp4cW9tMTg4In0.d-EDmjH0ID6XX9sN6KvoJg"} // import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
+        mapboxApiAccessToken={"pk.eyJ1IjoiemV5YWRoYXJvdW4iLCJhIjoiY202ejBhZzlqMDBtMDJrczh3N2t0NWFscyJ9.c40bkerUYksJm1hBiqFqcA"} // import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
       />
       {hoverInfo && mapState.zoom > 6 && <HoverInfoBox data={hoverInfo} />}
 
